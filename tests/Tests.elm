@@ -163,6 +163,7 @@ tests =
                 Expect.all
                   [ Expect.equal (Stack.fromList xs) 
                   , Expect.equal (Stack.fromList xs |> Stack.size) << Stack.size
+                  , Expect.equal (List.head xs) << Stack.peek
                   ]
                   (Stack.append (Stack.fromList xs) Stack.empty)
           
@@ -171,6 +172,7 @@ tests =
                 Expect.all
                   [ Expect.equal (Stack.fromList xs) 
                   , Expect.equal (Stack.fromList xs |> Stack.size) << Stack.size
+                  , Expect.equal (List.head xs) << Stack.peek
                   ]
                   (Stack.append Stack.empty (Stack.fromList xs))
         
@@ -187,6 +189,7 @@ tests =
                 Expect.all
                   [ Expect.equal Stack.empty 
                   , Expect.equal (Stack.size Stack.empty) << Stack.size
+                  , Expect.equal Nothing << Stack.peek
                   ]
                   (Stack.append Stack.empty Stack.empty)
         ]
@@ -200,6 +203,7 @@ tests =
                   Expect.all
                     [ Expect.equal (Stack.fromList appendedList)
                     , Expect.equal (List.length appendedList) << Stack.size
+                    , Expect.equal (List.head appendedList) << Stack.peek
                     ]
                     (List.map Stack.fromList xs |> Stack.concat)
             
@@ -208,5 +212,13 @@ tests =
                   Expect.equal
                     Stack.empty
                     (Stack.concat [])
+          ]
+
+      , describe "map"
+          [ fuzz (list int) "mapping the same function over a list and stack should result in the same stack" <|
+              \xs ->
+                  Expect.equal
+                    (List.map ((+) 1) xs |> Stack.fromList)
+                    (Stack.fromList xs |> Stack.map ((+) 1)) 
           ]
     ]
