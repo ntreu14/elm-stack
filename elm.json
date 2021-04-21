@@ -1,6 +1,6 @@
 {
   "type": "package",
-  "name": "ntreu14/stack",
+  "name": "ntreu14/elm-stack",
   "summary": "A simple implementation of a stack data structure in Elm",
   "license": "MIT",
   "version": "1.0.0",
