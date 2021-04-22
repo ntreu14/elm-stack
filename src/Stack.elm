@@ -16,7 +16,7 @@ module Stack exposing
 type Stack a
   = Stack Int (List a)
 
-{-| Initialize an an empty stack.
+{-| Initialize an empty stack.
 -}
 empty : Stack a
 empty = Stack 0 []
@@ -24,11 +24,11 @@ empty = Stack 0 []
 {-| Given a `Stack`, returns `True` if the `Stack` is empty
     or `False` if `Stack` has one or more elements.
 
-      isEmpty Stack.empty => True
+      Stack.isEmpty Stack.empty => True
       
       List.range 1 10
         |> Stack.fromList
-        |> Stack.isEmpty  => False
+        |> Stack.isEmpty        => False
 -}
 isEmpty : Stack a -> Bool
 isEmpty (Stack _ xs) =
@@ -100,7 +100,7 @@ push : a -> Stack a -> Stack a
 push v (Stack count xs) =
   Stack (count + 1) (v :: xs)
 
-{-| Given a stack, return `Just` the top of the `Stack` or
+{-| Given a `Stack`, return `Just` the top of the `Stack` or
     `Nothing` if the `Stack` is empty.
 
       Stack.peek Stack.empty    => Nothing
@@ -152,7 +152,7 @@ concat : List (Stack a) -> Stack a
 concat = List.foldr append empty 
 
 {-| Given a function `(a -> b)` and a `Stack a` return a new 
-    `Stack b` with function applied to every element of the stack.
+    `Stack b` with the function applied to every element of the stack.
 
       Stack.fromList [1, 2, 3] 
         |> Stack.map ((+) 1)      => Stack [2, 3, 4]
