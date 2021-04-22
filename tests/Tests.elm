@@ -10,7 +10,7 @@ nonEmptyListFuzzer fuzzer =
   list fuzzer |> Fuzz.map2 (::) fuzzer
 
 flip : (a -> b -> c) -> b -> a -> c
-flip f a b = f b a
+flip f b a = f a b
 
 uncurry : (a -> b -> c) -> (a, b) -> c
 uncurry f (a, b) = f a b
@@ -54,7 +54,7 @@ tests =
         ]
     
     , describe "size" 
-        [ test "getting a size from a stack constructed using push" <|
+        [ test "can get a size from a stack constructed using push" <|
             \() ->
                 Stack.empty
                   |> Stack.push 1
@@ -79,7 +79,7 @@ tests =
         ]
 
     , describe "fromList"
-        [ fuzz (list int) "fromList is equal to popping the same elements on the list" <|
+        [ fuzz (list int) "fromList is equal to pushing the same elements on the list" <|
             \xs ->
                 Expect.equal
                   (List.foldr Stack.push Stack.empty xs)
@@ -99,7 +99,7 @@ tests =
                   (List.tail xs |> Maybe.withDefault [] |> Stack.fromList)
                   (Stack.fromList xs |> Stack.pop |> Tuple.second)
         
-        , test "popping on an empty stack yields nothing as the first element of the tuple" <|
+        , test "popping on an empty stack yields Nothing as the first element of the tuple" <|
             \() ->
                 Expect.equal
                   Nothing
@@ -181,6 +181,7 @@ tests =
                 Expect.all
                   [ Expect.equal (uncurry List.append stacks |> Stack.fromList) 
                   , Expect.equal (uncurry List.append stacks |> Stack.fromList |> Stack.size) << Stack.size
+                  , Expect.equal (uncurry List.append stacks |> List.head) << Stack.peek
                   ]
                   (both Stack.fromList stacks |> uncurry Stack.append)
       
@@ -219,6 +220,12 @@ tests =
               \xs ->
                   Expect.equal
                     (List.map ((+) 1) xs |> Stack.fromList)
-                    (Stack.fromList xs |> Stack.map ((+) 1)) 
+                    (Stack.fromList xs |> Stack.map ((+) 1))
+          
+          , test "mapping an empty stack should result in an empty stack" <| 
+              \() ->
+                  Expect.equal
+                    Stack.empty
+                    (Stack.map (always "foobar") Stack.empty)
           ]
     ]
