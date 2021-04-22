@@ -3,7 +3,7 @@
   "name": "ntreu14/elm-stack",
   "summary": "A simple implementation of a stack data structure in Elm",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "exposed-modules": [ "Stack" ],
   "elm-version": "0.19.0 <= v < 0.20.0",
   "dependencies": {
