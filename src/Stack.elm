@@ -3,12 +3,12 @@ module Stack exposing
   , empty, isEmpty, size
   , toList, fromList
   , pop, push, peek, member
-  , append, concat, map
+  , append, concat, map, filter
   )
 
 {-| A basic implementaion of a generic Stack data strucutre.
 
-@docs Stack, empty, isEmpty, size, toList, fromList, pop, push, peek, member, append, concat, map
+@docs Stack, empty, isEmpty, size, toList, fromList, pop, push, peek, member, append, concat, map, filter
 -}
 
 {-| A generic stack definition.
@@ -152,10 +152,13 @@ concat : List (Stack a) -> Stack a
 concat = List.foldr append empty
 
 {-| Given a function `(a -> b)` and a `Stack a` return a new
-    `Stack b` with the function applied to every element of the stack.
+    `Stack b` with the function applied to every element of the stack. Similar to `List.map`
 
       Stack.fromList [1, 2, 3]
         |> Stack.map ((+) 1)      => Stack 3 [2, 3, 4]
+
+      Stack.fromList [1, 2, 3]
+        |> Stack.map String.fromInt      => Stack 3 ["1", "2", "3"]
 -}
 map : (a -> b) -> Stack a -> Stack b
 map f (Stack count xs) =
@@ -163,7 +166,8 @@ map f (Stack count xs) =
     |> Stack count
 
 
-{-| Filter items within stack, similar to `List.filter`
+{-| Give a predicate function `(a -> Bool)` and a `Stack a` return a new
+    `Stack a` with only the elements in which the predicate function returns `True`. Similar to `List.filter`.
 
       Stack.fromList [1, 2, 3]
         |> Stack.filter ((<) 1)      => Stack 2 [2, 3]
