@@ -234,7 +234,7 @@ tests =
                   Stack.fromList xs
                     |> Stack.filter (always True)
                     |> Expect.equal (Stack.fromList xs)
-          , test "result stack doesn't contain items which doesn't satisfy the predicate" <|
+          , test "result stack doesn't contain items which don't satisfy the predicate" <|
               \() ->
                   Stack.fromList [1,2,3]
                     |> Stack.filter ((<) 1)
