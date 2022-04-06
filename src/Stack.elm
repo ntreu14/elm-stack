@@ -166,7 +166,7 @@ map f (Stack count xs) =
     |> Stack count
 
 
-{-| Give a predicate function `(a -> Bool)` and a `Stack a` return a new
+{-| Given a predicate function `(a -> Bool)` and a `Stack a` return a new
     `Stack a` with only the elements in which the predicate function returns `True`. Similar to `List.filter`.
 
       Stack.fromList [1, 2, 3]
