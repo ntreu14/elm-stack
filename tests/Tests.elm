@@ -239,5 +239,9 @@ tests =
                   Stack.fromList [1,2,3]
                     |> Stack.filter ((<) 1)
                     |> Expect.equal (Stack.fromList [2,3])
+          , fuzz bool "filtering empty stack gives back empty stack" <|
+              \bool ->
+                  Stack.filter (always bool) Stack.empty
+                    |> Expect.equal (Stack.fromList [])
           ]
     ]
